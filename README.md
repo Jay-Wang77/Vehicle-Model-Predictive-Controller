@@ -61,14 +61,14 @@ Match the optimization variables in vars with the actual vehicle state. This eff
 
 Each fg[1 + ...] represents a specific constraint in the optimization problem, starting from index 1 since index 0 stores the cost function value. For each vehicle state variable:
 
-> fg[1 + x_start] constraints for the vehicle's global X coordinate. 
-> fg[1 + y_start] constraints for the vehicle's global Y coordinate. 
-> fg[1 + psi_start] constraints for the vehicle's heading angle. 
-> fg[1 + v_longitudinal_start] constraints for the vehicle's longitudinal speed. 
-> fg[1 + v_lateral_start] constraints for the vehicle's lateral speed. 
-> fg[1 + yaw_rate_start] constraints for the vehicle's yaw rate. 
-> fg[1 + cte_start] constraints for the vehicle's lateral tracking error (CTE). 
-> fg[1 + epsi_start] constraints for the vehicle's heading error (Epsi).
+- **fg[1 + x_start]**: Constraints for the vehicle's global X coordinate.
+- **fg[1 + y_start]**: Constraints for the vehicle's global Y coordinate.
+- **fg[1 + psi_start]**: Constraints for the vehicle's heading angle.
+- **fg[1 + v_longitudinal_start]**: Constraints for the vehicle's longitudinal speed.
+- **fg[1 + v_lateral_start]**: Constraints for the vehicle's lateral speed.
+- **fg[1 + yaw_rate_start]**: Constraints for the vehicle's yaw rate.
+- **fg[1 + cte_start]**: Constraints for the vehicle's lateral tracking error (CTE).
+- **fg[1 + epsi_start]**: Constraints for the vehicle's heading error (Epsi).
 
 Here, the corresponding state variables in vars are directly assigned to the constraint variables in fg, enforcing these initial state constraints to match the vehicle's current state. This ensures that the initial conditions are correct for the optimization problem solving process, and subsequent optimization steps (future states and control actions in the optimization variables) are based on this actual starting point.
 
@@ -82,8 +82,8 @@ Here, the corresponding state variables in vars are directly assigned to the con
 4. Control input variables: front_wheel_angle_0 for the front wheel angle and longitudinal_acceleration_0 for longitudinal acceleration. These variables are the control quantities adjusted by the optimizer to achieve the predicted vehicle state at time t.
 5. Forward iterate the dynamics model, predicting the vehicle's future motion based on the calculated state variables and control input variables. Then satisfy the equation: ***The predicted lateral position's calculated value during the optimization process must equal the value calculated from the vehicle dynamics model***. This is achieved by setting fg[1 + .... + t] equal to the difference between these two predicted values.
 
-> x_1 represents the predicted lateral position x at time step t+1 in the optimization variables.
-> x_0 + ...the latter term represents the predicted lateral position x at time step t+1 calculated from the vehicle dynamics model.
+- **x_1** represents the predicted lateral position x at time step t+1 in the optimization variables.
+- **x_0 + ...** the latter term represents the predicted lateral position x at time step t+1 calculated from the vehicle dynamics model.
 
 ### mpc_controller Class
 
@@ -115,9 +115,9 @@ Utilize the FG_eval class to create an instance of an FG_eval object, defining t
 Configure IPOPT solver parameters, such as verbosity level and computational optimizations.
 Call the CppAD::ipopt::solve function to solve the optimization problem. The solver calculates optimal control inputs based on the objective and constraint functions.
 
-> print_level: Controls the verbosity level of output information.
-> Sparse: Indicates to the solver that the constraints and Jacobian matrix are sparse, significantly improving solving speed.
-> max_cpu_time: Limits the maximum CPU time for the solver.
+- **print_level**: Controls the verbosity level of output information.
+- **Sparse**: Indicates to the solver that the constraints and Jacobian matrix are sparse, significantly improving solving speed.
+- **max_cpu_time**: Limits the maximum CPU time for the solver.
 
 **Process Solution Results:**
 
